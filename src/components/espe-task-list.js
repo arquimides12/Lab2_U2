@@ -57,18 +57,18 @@ class TaskList extends LitElement {
 
             .add-task-button {
                 position: fixed;
-                bottom: 2rem;
-                right: 2rem;
+                bottom: 5rem;
+                right: 5rem;
                 background: var(--primary-color, #019863);
                 color: white;
                 border: none;
-                border-radius: 50%;
-                width: 56px;
-                height: 56px;
+                border-radius: 20%;
+                width: 106px;
+                height: 100px;
                 cursor: pointer;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
                 transition: all 0.2s;
-                display: flex;
+                display: center;
                 align-items: center;
                 justify-content: center;
                 z-index: 100;
@@ -77,10 +77,6 @@ class TaskList extends LitElement {
             .add-task-button:hover {
                 background: var(--primary-hover, #017f56);
                 transform: scale(1.05);
-            }
-
-            .add-task-button:active {
-                transform: scale(0.95);
             }
 
             .filter-tabs {
@@ -169,18 +165,6 @@ class TaskList extends LitElement {
             this._groupTasks();
         }
     }
-
-    // _groupTasks() {
-    //     this._groupedTasks = this.tasks.reduce((acc, task) => {
-    //         const date = task.date || 'hoy';
-    //         if (!acc[date]) {
-    //             acc[date] = [];
-    //         }
-    //         acc[date].push(task);
-    //         return acc;
-    //     }, {});
-    // }
-
     _groupTasks() {
         if (this.view === 'prioridad') {
             this._groupedTasks = this.tasks.reduce((acc, task) => {
@@ -283,9 +267,7 @@ class TaskList extends LitElement {
                 ${this._renderTasksByDate()}
                 
                 <button class="add-task-button" @click="${this._onAddTask}" title="Agregar nueva tarea">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
-                </svg>
+                  Agregar tarea
                 </button>
             </div>
         `;
