@@ -221,3 +221,33 @@ class EspeTaskDetail extends LitElement {
 customElements.define('espe-task-detail', EspeTaskDetail);
 ```
 # Ejecución
+
+Al finalizar tendremos un CRUD que cumple las funciones
+
+### Agregar
+![Captura de ejecución](img/guarEdit.png)
+
+#### Editar
+
+![Captura de ejecución](img/edita.png)
+
+- Al finalizar la edición nos dara este resultado 
+
+![Captura de ejecución](img/finalEdit.png)
+
+
+#### Eliminar 
+![Captura de ejecución](img/mensaje_eliminar.png)
+
+Modificar 
+
+#### Guardar 
+
+![Captura de ejecución](img/guarEditado.png)
+ 
+## Final Ejecución
+
+```bash
+ http://localhost:8080.
+```
+![Captura de ejecución](img/final.png)
