@@ -224,10 +224,18 @@ customElements.define('espe-task-detail', EspeTaskDetail);
 
 Al finalizar tendremos un CRUD que cumple las funciones
 
-### Agregar
-![Captura de ejecución](img/guarEdit.png)
+# Agregar
 
-#### Editar
+Este es el formulario que se me da para llenar los datos 
+
+![Captura de ejecución](img/eje2.png)
+
+Al finalizar el agragado ponemos guardar 
+
+![Captura de ejecución](img/guarEditado.png)
+
+
+# Editar
 
 ![Captura de ejecución](img/edita.png)
 
@@ -236,16 +244,16 @@ Al finalizar tendremos un CRUD que cumple las funciones
 ![Captura de ejecución](img/finalEdit.png)
 
 
-#### Eliminar 
+# Eliminar 
 ![Captura de ejecución](img/mensaje_eliminar.png)
 
-Modificar 
+ 
 
-#### Guardar 
+# Guardar 
 
 ![Captura de ejecución](img/guarEditado.png)
  
-## Final Ejecución
+# Final Ejecución
 
 ```bash
  http://localhost:8080.
