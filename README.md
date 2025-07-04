@@ -228,11 +228,11 @@ Al finalizar tendremos un CRUD que cumple las funciones
 
 Este es el formulario que se me da para llenar los datos 
 
-![Captura de ejecución](img/eje2.png)
+![Captura de ejecución](img/agregar.png)
 
 Al finalizar el agragado ponemos guardar 
 
-![Captura de ejecución](img/guarEditado.png)
+![Captura de ejecución](img/agregado.png)
 
 
 # Editar
