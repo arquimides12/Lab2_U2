@@ -74,22 +74,22 @@ import "./components/espe-task-detail.js";
 import '../css/styles.css';
 // Aquí se puede agregar lógica como eventos, actualización de datos, etc.
 ```
+
 index.js importa los componentes definidos en la carpeta src/components. Cada componente es una clase que extiende de LitElement y define su estructura y comportamiento.
 
 index.js importa los componentes definidos en la carpeta src/components. Cada componente es una clase que extiende de LitElement y define su estructura y comportamiento.
----
+
 Aquí definimos variables CSS para mantener una apariencia consistente y se utilizan en los componentes como LitElement. Las variables como --bg-primary, --text-primary se utilizan en los componentes para personalizar colores y otros estilos. 
----
+
 
 ## package.json
 
 El archivo package.json contiene los metadatos del proyecto, como el nombre, la versión, las dependencias y los scripts para ejecutar tareas.
 
-------
+
 dependencies: Aquí están las dependencias del proyecto, como lit, que es la librería para crear los componentes web.
 
 devDependencies: Contiene las dependencias necesarias para el desarrollo, como Webpack, webpack-cli y webpack-dev-server.
-------
 
 Los scripts definidos en package.json permiten ejecutar comandos como npm run serve para iniciar el servidor de desarrollo con Webpack.
 
