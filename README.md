@@ -35,5 +35,10 @@ Esto abrirá la aplicación en http://localhost:8080.
 
 ![Captura de ejecución](img/carpeta.png)
 
+## Componentes 
+En este laboratorio los componentes era a preferencia del desarrollador en este caso se 
+hicieron cinco dentro de la carpeta src los culaes son 
+
+![Captura de ejecución](img/components.png)
 
 
