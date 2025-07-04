@@ -112,4 +112,112 @@ static get styles() {
 
 En el archivo index.html, el archivo CSS se importa para que se apliquen los estilos globales a todos los componentes:
 
+# Componentes en ESPE Tasks
 
+### espe-task-item.js
+
+- Muestra una tarea individual dentro de la lista.
+- Permite editar o eliminar la tarea.
+- Presenta los detalles básicos de la tarea, como nombre, hora y prioridad.
+
+Para que sirve? 
+Para interactuar con cada tarea de forma individual presenta  la información básica de cada tarea y permite realizar acciones sobre ella.
+
+```js 
+import { LitElement, html, css } from 'lit-element';
+class EspeTaskItem extends LitElement {
+    static get styles() {
+        return css`
+            /* Estilos para una tarea individual */
+            :host {
+                display: block;
+                padding: 10px;
+                background-color: #f4f4f4;
+                border-radius: 5px;
+            }
+        `;
+    }
+    render() {
+        return html`
+            <div class="task-item">
+                <p>Nombre de la tarea</p>
+                <button @click="${this._editTask}">Editar</button>
+                <button @click="${this._deleteTask}">Eliminar</button>
+            </div>
+        `;
+    }
+    _editTask() {
+        // Lógica para editar la tarea
+    }
+    _deleteTask() {
+        // Lógica para eliminar la tarea
+    }
+}
+
+customElements.define('espe-task-item', EspeTaskItem);
+```
+### espe-task-form.js
+
+- Proporciona un formulario para agregar o editar tareas.
+- Incluye campos como nombre de la tarea, fecha, hora y prioridad.
+- Realiza validaciones para asegurarse de que los campos estén completos.
+
+```js 
+import { LitElement, html, css } from 'lit-element';
+class EspeTaskForm extends LitElement {
+    static get styles() {
+        return css`
+            /* Estilos para el formulario */
+            :host {
+                display: block;
+                padding: 20px;
+                background-color: #ffffff;
+            }
+        `;
+    }
+    render() {
+        return html`
+            <form>
+                <label for="taskName">Nombre</label>
+                <input id="taskName" type="text" required>
+                <button type="submit">Agregar tarea</button>
+            </form>
+        `;
+    }
+}
+customElements.define('espe-task-form', EspeTaskForm);
+```
+### espe-task-detail.js
+
+- Muestra los detalles completos de una tarea seleccionada.
+- Permite editar o marcar como completada la tarea.
+```js 
+import { LitElement, html, css } from 'lit-element';
+
+class EspeTaskDetail extends LitElement {
+    static get styles() {
+        return css`
+            /* Estilos para la vista de detalles */
+            :host {
+                display: block;
+                padding: 20px;
+                background-color: #f0f0f0;
+            }
+        `;
+    }
+    render() {
+        return html`
+            <div class="task-detail">
+                <h2>Tarea Detallada</h2>
+                <p>Nombre de la tarea: Tarea de ejemplo</p>
+                <button @click="${this._markCompleted}">Marcar como completada</button>
+            </div>
+        `;
+    }
+    _markCompleted() {
+        // Lógica para marcar la tarea como completada
+    }
+}
+customElements.define('espe-task-detail', EspeTaskDetail);
+```
+# Ejecución
