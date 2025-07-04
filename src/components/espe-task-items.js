@@ -1,271 +1,207 @@
 import { LitElement, html, css } from 'lit-element';
-import './espe-task-items.js';
 
-class TaskList extends LitElement {
+class TaskItem extends LitElement {
     static get properties() {
         return {
-            tasks: { type: Array },
-            theme: { type: String },
-            _groupedTasks: { type: Object, attribute: false }
+            task: { type: Object },
+            theme: { type: String }
         };
     }
 
-  static get styles() {
+    static get styles() {
         return css`
-            :host {
-                display: block;
-                width: 100%;
-            }
-
-            .task-list-container {
-                width: 100%;
-            }
-
-            .date-section {
-                margin-bottom: 1.5rem;
-            }
-
-            .date-heading {
-                color: var(--text-primary, white);
-                font-size: 1.125rem;
-                font-weight: 700;
-                margin: 0 0 0.5rem 0;
-                padding: 1rem 0 0.5rem 0;
-                border-bottom: 1px solid var(--border-color, #214a3c);
-            }
-
-            .tasks-group {
+            .task-item {
                 display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .empty-state {
-                text-align: center;
-                color: var(--text-secondary, #8ecdb7);
-                padding: 2rem;
-                font-size: 1.125rem;
-            }
-
-            .empty-icon {
-                width: 64px;
-                height: 64px;
-                margin: 0 auto 1rem;
-                opacity: 0.5;
-            }
-
-            .add-task-button {
-                position: fixed;
-                bottom: 2rem;
-                right: 2rem;
-                background: var(--primary-color, #019863);
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 56px;
-                height: 56px;
+                align-items: center;
+                gap: 1rem;
+                background-color: var(--task-bg, #10231c);
+                min-height: 72px;
                 cursor: pointer;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-                transition: all 0.2s;
+                transition: background-color 0.2s;
+                border-radius: 8px;
+                margin-bottom: 0.5rem;
+            }
+
+            .task-item:hover {
+                background-color: var(--task-hover-bg, #17352b);
+            }
+
+            .task-icon {
+                color: var(--text-primary, white);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                z-index: 100;
+                border-radius: 8px;
+                background-color: var(--accent-bg, #214a3c);
+                width: 48px;
+                height: 48px;
             }
 
-            .add-task-button:hover {
-                background: var(--primary-hover, #017f56);
-                transform: scale(1.05);
-            }
-
-            .add-task-button:active {
-                transform: scale(0.95);
-            }
-
-            .filter-tabs {
+            .task-content {
+                flex: 1;
                 display: flex;
-                border-bottom: 1px solid var(--border-color, #2f6a55);
-                margin-bottom: 1rem;
+                flex-direction: column;
+                justify-content: center;
             }
 
-            .filter-tab {
+            .task-name {
+                color: var(--text-primary, white);
+                font-size: 1rem;
+                font-weight: 500;
+                margin: 0 0 0.25rem 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .task-time {
+                color: var(--text-secondary, #8ecdb7);
+                font-size: 0.875rem;
+                margin: 0;
+            }
+
+            .task-actions {
+                display: flex;
+                gap: 0.5rem;
+                opacity: 0;
+                transition: opacity 0.2s;
+                margin-right: 0.75rem;
+            }
+
+            .task-item:hover .task-actions {
+                opacity: 1;
+            }
+
+            .action-btn {
+                color: var(--text-secondary, #8ecdb7);
                 background: none;
                 border: none;
-                color: var(--text-secondary, #8ecdb7);
-                padding: 0.75rem 1rem;
+                padding: 0.5rem;
                 cursor: pointer;
-                font-weight: 600;
-                font-size: 0.875rem;
-                border-bottom: 3px solid transparent;
-                transition: all 0.2s;
+                border-radius: 4px;
+                transition: color 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
-            .filter-tab.active {
+            .action-btn:hover {
                 color: var(--text-primary, white);
-                border-bottom-color: var(--primary-color, #019863);
             }
 
-            .filter-tab:hover {
-                color: var(--text-primary, white);
+            .action-btn.delete:hover {
+                color: #ef4444;
             }
+
+            .priority-indicator {
+                width: 4px;
+                height: 100%;
+                border-radius: 2px;
+                margin-right: 0.5rem;
+            }
+
+            .priority-alta { background-color: #ef4444; }
+            .priority-media { background-color: #f59e0b; }
+            .priority-baja { background-color: #10b981; }
 
             /* Tema oscuro */
             :host([theme="dark"]) {
+                --task-bg: #10231c;
+                --task-hover-bg: #17352b;
                 --text-primary: white;
                 --text-secondary: #8ecdb7;
-                --border-color: #2f6a55;
-                --primary-color: #019863;
-                --primary-hover: #017f56;
+                --accent-bg: #214a3c;
             }
 
             /* Tema claro */
             :host([theme="light"]) {
+                --task-bg: #f8f9fa;
+                --task-hover-bg: #e9ecef;
                 --text-primary: #1f2937;
                 --text-secondary: #6b7280;
-                --border-color: #d1d5db;
-                --primary-color: #059669;
-                --primary-hover: #047857;
+                --accent-bg: #e5e7eb;
             }
-
-            /* Animaciones */
-            @keyframes slideIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+            
+            .task-item.completed {
+                opacity: 0.7;
             }
-
-            .date-section {
-                animation: slideIn 0.3s ease-out;
+            
+            .task-item.completed .task-name {
+                text-decoration: line-through;
             }
-
-            /* Responsive */
-            @media (max-width: 768px) {
-                .add-task-button {
-                bottom: 1rem;
-                right: 1rem;
-                width: 48px;
-                height: 48px;
-                }
+            
+            .task-item.completed .task-icon {
+                color: #019863;
             }
         `;
     }
 
     constructor() {
         super();
-        this.tasks = [];
+        this.task = {};
         this.theme = 'dark';
-        this._groupedTasks = {};
     }
 
-    updated(changedProperties) {
-        if (changedProperties.has('tasks')) {
-            this._groupTasks();
+    _onTaskClick(e) {
+        if (!e.target.closest('.task-actions')) {
+            this.dispatchEvent(new CustomEvent('task-selected', {
+                detail: { task: this.task },
+                bubbles: true,
+                composed: true
+            }));
         }
     }
 
-    _groupTasks() {
-        this._groupedTasks = this.tasks.reduce((acc, task) => {
-            const date = task.date || 'hoy';
-            if (!acc[date]) {
-                acc[date] = [];
-            }
-            acc[date].push(task);
-            return acc;
-        }, {});
-    }
-
-    _capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
-    _onAddTask() {
-        this.dispatchEvent(new CustomEvent('add-task-requested', {
-            bubbles: true,
-            composed: true
-        }));
-    }
-
-    _onTaskSelected(e) {
-        this.dispatchEvent(new CustomEvent('task-selected', {
-            detail: e.detail,
-            bubbles: true,
-            composed: true
-        }));
-    }
-
-    _onTaskEdit(e) {
+    _onEditClick(e) {
+        e.stopPropagation();
         this.dispatchEvent(new CustomEvent('task-edit', {
-            detail: e.detail,
+            detail: { task: this.task },
             bubbles: true,
             composed: true
         }));
     }
 
-    _onTaskDeleted(e) {
-        this.dispatchEvent(new CustomEvent('task-deleted', {
-            detail: e.detail,
-            bubbles: true,
-            composed: true
-        }));
-    }
-
-    _renderEmptyState() {
-        return html`
-            <div class="empty-state">
-                <div class="empty-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"></path>
-                </svg>
-                </div>
-                <p>No hay tareas para mostrar</p>
-                <p>¡Agrega tu primera tarea!</p>
-            </div>
-        `;
-    }
-
-    _renderTasksByDate() {
-        const dates = Object.keys(this._groupedTasks);
-        
-        if (dates.length === 0) {
-            return this._renderEmptyState();
+    _onDeleteClick(e) {
+        e.stopPropagation();
+        if (confirm(`¿Estás seguro de que deseas eliminar la tarea "${this.task.name}"?`)) {
+            this.dispatchEvent(new CustomEvent('task-deleted', {
+                detail: { task: this.task },
+                bubbles: true,
+                composed: true
+            }));
         }
-
-        return dates.map(date => html`
-        <div class="date-section">
-            <h3 class="date-heading">${this._capitalizeFirstLetter(date)}</h3>
-            <div class="tasks-group">
-                ${this._groupedTasks[date].map(task => html`
-                    <espe-task-item 
-                    .task="${task}"
-                    .theme="${this.theme}"
-                    @task-selected="${this._onTaskSelected}"
-                    @task-edit="${this._onTaskEdit}"
-                    @task-deleted="${this._onTaskDeleted}">
-                    </espe-task-item>
-                `)}
-            </div>
-        </div>
-        `);
     }
 
     render() {
+        if (!this.task.id) return html``;
+
         return html`
-            <div class="task-list-container">
-                ${this._renderTasksByDate()}
-                
-                <button class="add-task-button" @click="${this._onAddTask}" title="Agregar nueva tarea">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
-                </svg>
-                </button>
+            <div class="task-item ${this.task.completed ? 'completed' : ''}" @click="${this._onTaskClick}">
+                <div class="priority-indicator priority-${this.task.priority}"></div>
+                <div class="task-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                        <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"></path>
+                    </svg>
+                </div>
+                <div class="task-content">
+                    <p class="task-name">${this.task.name}</p>
+                    <p class="task-time">${this.task.time}</p>
+                </div>
+                <div class="task-actions">
+                    <button class="action-btn edit" @click="${this._onEditClick}" title="Editar tarea">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                        <path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"></path>
+                        </svg>
+                    </button>
+                    <button class="action-btn delete" @click="${this._onDeleteClick}" title="Eliminar tarea">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                        <path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         `;
     }
 }
 
-customElements.define('espe-task-list', TaskList);
+customElements.define('espe-task-item', TaskItem);

@@ -6,11 +6,12 @@ class TaskList extends LitElement {
         return {
             tasks: { type: Array },
             theme: { type: String },
+            view: { type: String },
             _groupedTasks: { type: Object, attribute: false }
         };
     }
 
-  static get styles() {
+    static get styles() {
         return css`
             :host {
                 display: block;
@@ -29,7 +30,7 @@ class TaskList extends LitElement {
                 color: var(--text-primary, white);
                 font-size: 1.125rem;
                 font-weight: 700;
-                margin: 0 0 0.5rem 0;
+                margin: 0 0 0.5rem 0.75rem;
                 padding: 1rem 0 0.5rem 0;
                 border-bottom: 1px solid var(--border-color, #214a3c);
             }
@@ -159,6 +160,7 @@ class TaskList extends LitElement {
         super();
         this.tasks = [];
         this.theme = 'dark';
+        this.view = 'fecha';
         this._groupedTasks = {};
     }
 
@@ -168,15 +170,37 @@ class TaskList extends LitElement {
         }
     }
 
+    // _groupTasks() {
+    //     this._groupedTasks = this.tasks.reduce((acc, task) => {
+    //         const date = task.date || 'hoy';
+    //         if (!acc[date]) {
+    //             acc[date] = [];
+    //         }
+    //         acc[date].push(task);
+    //         return acc;
+    //     }, {});
+    // }
+
     _groupTasks() {
-        this._groupedTasks = this.tasks.reduce((acc, task) => {
-            const date = task.date || 'hoy';
-            if (!acc[date]) {
-                acc[date] = [];
-            }
-            acc[date].push(task);
-            return acc;
-        }, {});
+        if (this.view === 'prioridad') {
+            this._groupedTasks = this.tasks.reduce((acc, task) => {
+                const priority = task.priority || 'media';
+                if (!acc[priority]) {
+                    acc[priority] = [];
+                }
+                acc[priority].push(task);
+                return acc;
+            }, {});
+        } else {
+            this._groupedTasks = this.tasks.reduce((acc, task) => {
+                const date = task.date || 'hoy';
+                if (!acc[date]) {
+                    acc[date] = [];
+                }
+                acc[date].push(task);
+                return acc;
+            }, {});
+        }
     }
 
     _capitalizeFirstLetter(string) {
